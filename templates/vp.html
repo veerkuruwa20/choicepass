@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/style.css">
+    <title>VP Dashboard</title>
+</head>
+
+<header class="header">
+    <img src="../static/logo.png" class="logo">
+    <h1>PENDING GATEPASS REQUESTS</h1>
+    <form action="{{ url_for('logout') }}" method="post">
+        <button type="submit" class="purchase--btn">Logout</button>
+    </form>
+</header>
+
+<body>
+    <div class="container">
+        {% if pending_requests %}
+            {% for request in pending_requests %}
+                <div class="card">
+                    <span class="card__title">{{ request[1] }} (Admission No: {{ request[2] }})</span>
+                    <p class="card__content">
+                        <strong>Purpose:</strong> {{ request[5] }}<br>
+                        <strong>Class:</strong> {{ request[3] }} {{ request[4] }}<br> <!-- Class and Division combined -->
+                        <strong>Mode of Transport:</strong> {{ request[6] }}<br>
+                        <strong>Departure Time:</strong> {{ request[7] }}<br>
+                        <strong>Class Teacher:</strong> {{ request[8] }}<br>
+                    </p>
+                    <form class="card__form" method="POST">
+                        <button type="submit" class="card__button" name="approve" value="{{ request[1] }}|{{ request[2] }}|{{ request[5] }}|{{ request[6] }}|{{ request[8] }}">Approve</button>
+                        <button type="submit" class="card__button" name="reject" value="{{ request[1] }}|{{ request[2] }}|{{ request[5] }}|{{ request[6] }}|{{ request[8] }}">Reject</button>
+                    </form>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No pending requests today.</p>
+        {% endif %}
+    </div>
+</body>
+</html>
+

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/style.css">
+    <title>Teacher Dashboard</title>
+</head>
+<header class="header">
+  <img src="../static/logo.png" class="logo">
+  <h1>REQUEST GATEPASS</h1>
+  <form action="{{ url_for('logout') }}" method="post">
+      <button type="submit" class="purchase--btn">Logout</button>
+  </form>
+</header>
+<body>
+  <div class="modal">
+    <form method="POST" class="form2">
+        <div class="credit-card-info--form">
+            <div class="input_container">
+                <label for="student_name" class="input_label">Full Name of Student:</label>
+                <input id="student_name" class="input_field" type="text" name="student_name" placeholder="Enter full name">
+            </div>
+            <div class="input_container">
+                <label for="admno" class="input_label">Admission Number:</label>
+                <input id="admno" class="input_field" type="text" name="admno" placeholder="Enter Admission Number">
+            </div>
+            <div class="input_container">
+                <label for="class_div" class="input_label">Class & Division:</label>
+                <div class="split">
+                    <input id="class" class="input_field" type="text" name="class" placeholder="Enter Class">
+                    <input id="division" class="input_field" type="text" name="division" placeholder="Enter Division">
+                </div>
+            </div>
+            <div class="input_container">
+                <label for="purpose" class="input_label">Purpose:</label>
+                <input id="purpose" class="input_field" type="text" name="purpose" placeholder="Enter Purpose">
+            </div>
+            <div class="input_container">
+                <label for="transport" class="input_label">Mode of Transport:</label>
+                <input id="transport" class="input_field" type="text" name="transport" placeholder="Enter Mode of Transport">
+            </div>
+            <div class="input_container">
+                <label for="departure_time" class="input_label">Expected Time of Departure:</label>
+                <input id="departure_time" class="input_field" type="text" name="departure_time" placeholder="Enter Departure Time">
+            </div>
+        </div>
+        <button class="purchase--btn">Submit Request</button>
+    </form>
+</div><br><br><br>
+
+
+<table style="width:100%;">
+  <tr>
+      <th>Date</th>
+      <th>Name</th>
+      <th>Class</th>
+      <th>Admission Number</th>
+      <th>Class Teacher</th>
+      <th>Status</th>
+      <th>OTP</th>
+      <th>Time</th>
+  </tr>
+  {% for row in final_data %}
+  <tr>
+      <td>{{ row[0] }}</td> <!-- Date -->
+      <td>{{ row[1] }}</td> <!-- Student Name -->
+      <td>{{ row[2] }}</td> <!-- Class -->
+      <td>{{ row[3] }}</td> <!-- Admission Number -->
+      <td>{{ row[4] }}</td> <!-- Class Teacher -->
+      <td>{{ row[5] }}</td> <!-- Status -->
+      <td>{{ row[6] }}</td> <!-- OTP -->
+      <td>{{ row[7] }}</td> <!-- Time (ETD or actual departure time) -->
+  </tr>
+  {% endfor %}
+</table><br><b><br>
+
+</body>
+</html>
