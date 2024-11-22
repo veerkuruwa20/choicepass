@@ -15,6 +15,7 @@ requests = []
 final = []
 all=[]
 
+
 def refreshrec():
     global creds
     global final
@@ -67,9 +68,8 @@ def home():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    global role
-    global name
-    refreshrec()  # Ensure creds are loaded before checking login
+    global role, name
+    refreshrec() 
     
     if request.method == 'POST':
         username = request.form.get('username')
