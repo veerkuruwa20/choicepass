@@ -14,57 +14,31 @@
       </form>
     </header>
 <body>
-    <table style="width:100%;">
-        <tr>
-          <th>Name</th>
-          <th>Class</th>
-          <th>Admission Number</th>
-          <th>Class Teacher</th>
-          <th>Status</th>
-          <th>OTP</th>
-          <th>Time</th>
-          <th>Checkout</th>
-        </tr>
-        <tr>
-          <td>Emil</td>
-          <td>Emil</td>
-          <td>Emil</td>
-          <td>Emil</td>
-          <td>Emil</td>
-          <td>Emil</td>
-          <td>Emil</td>
-          <td><button class="oauthButton">
-            Continue
-            <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 17 5-5-5-5"></path><path d="m13 17 5-5-5-5"></path></svg>
-        </button></td>
-        </tr>
-        <tr>
-          <td>Emil</td>
-          <td>Emil</td>
-          <td>Emil</td>
-          <td>Emil</td>
-          <td>Emil</td>
-          <td>Emil</td>
-          <td>Emil</td>
-          <td><button class="oauthButton">
-            Continue
-            <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 17 5-5-5-5"></path><path d="m13 17 5-5-5-5"></path></svg>
-        </button></td>
-        </tr>
-      </table><br><b><br>
+  <table style="width:100%;">
+    <tr>
+        <th>Date</th>
+        <th>Name</th>
+        <th>Admission Number</th>
+        <th>Purpose</th>
+        <th>Mode</th>
+        <th>Class Teacher</th>
+        <th>Status</th>
+        <th>OTP</th>
+    </tr>
+    {% for row in final_data %}
+    <tr>
+        <td>{{ row[0] }}</td> <!-- Date -->
+        <td>{{ row[1] }}</td> <!-- Student Name -->
+        <td>{{ row[2] }}</td> <!-- Class -->
+        <td>{{ row[3] }}</td> <!-- Admission Number -->
+        <td>{{ row[4] }}</td> <!-- Class Teacher -->
+        <td>{{ row[5] }}</td> <!-- Status -->
+        <td>{{ row[6] }}</td> <!-- OTP -->
+        <td>{{ row[7] }}</td> <!-- Time (ETD or actual departure time) -->
+    </tr>
+    {% endfor %}
+  </table><br><b><br>
 
-      <form action="" class="form">
-        <p>
-            Create New User
-        </p>
-        <input type="email" placeholder="Username" name="username">
-        <input type="email" placeholder="Password" name="password">
-        <input type="email" placeholder="Name" name="namet">
-        <input type="email" placeholder="Role" name="role">
-        <button class="oauthButton">
-                        Continue
-                        <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 17 5-5-5-5"></path><path d="m13 17 5-5-5-5"></path></svg>
-                    </button>
-    </form>
+      
 </body>
 </html>

@@ -13,14 +13,17 @@ today_date = dt.date.today()
 creds = []
 requests = []
 final = []
+all=[]
 
 def refreshrec():
     global creds
     global final
     global requests
+    global all
+    all.clear()
     creds.clear()
     requests.clear()
-    final.clear()
+    
     
     # Load credentials
     try:
@@ -46,13 +49,15 @@ def refreshrec():
         print(f"Error reading requests.csv: {e}")
     
     # Load data.csv for approved/rejected requests, filter by teacher name
+    
+    
     try:
-        with open('data.csv', 'r') as fout:
-            csv_out = csv.reader(fout)
-            header = next(csv_out)  # Skip the header row
-            for row in csv_out:
-                if len(row) >= 8 and row[0] == str(today_date) and row[4] == name:  # Check if row has enough columns
-                    final.append(row)
+        with open('data.csv', 'r') as fout2:
+            csv_out2 = csv.reader(fout2)
+            header = next(csv_out2)  # Skip the header row
+            for row in csv_out2:
+                if len(row) >= 8 and row[0] == str(today_date): # Check if row has enough columns
+                    all.append(row)
     except Exception as e:
         print(f"Error reading data.csv: {e}")
 
@@ -76,6 +81,11 @@ def login():
             role = 'ADMIN'
             session['logged_in'] = True
             return redirect(url_for('admin'))
+        elif username=='new' and password=='new':
+            name = 'ADMIN'
+            role = 'ADMIN'
+            session['logged_in'] = True
+            return redirect(url_for('new'))
         
         # Check for user login
         for i in creds:
@@ -116,7 +126,17 @@ def teacher():
 
         # Call refreshrec() to refresh the data after appending to requests.csv
         refreshrec()
-
+    try:
+        global final
+        final.clear()
+        with open('data.csv', 'r') as fout:
+            csv_out = csv.reader(fout)
+            header = next(csv_out)  # Skip the header row
+            for row in csv_out:
+                if len(row) >= 8 and row[0] == str(today_date) and row[5] == name:  # Check if row has enough columns
+                    final.append(row)
+    except Exception as e:
+        print(f"Error reading data.csv: {e}")
     # Pass the updated final_data to the template
     return render_template('teacher.html', final_data=final)
 
@@ -217,6 +237,15 @@ def vp():
 
     return render_template('vp.html', pending_requests=pending_requests)
 
+@app.route('/admin', methods=['GET', 'POST'])
+def admin():
+    if not session.get('logged_in'):
+        return redirect(url_for('login'))
+
+
+    return render_template('admin.html', final_data=all)
+
+
 
 @app.route('/logout', methods=['POST'])
 def logout():
@@ -224,5 +253,29 @@ def logout():
     session.clear()
     return redirect(url_for('login'))
 
+
+
+@app.route('/new', methods=['GET', 'POST'])
+def new():
+    if not session.get('logged_in'):
+        return redirect(url_for('login'))
+    
+    if request.method == 'POST':
+        username = request.form.get('username')
+        password = request.form.get('password')
+        namet = request.form.get('namet')
+        role=request.form.get('role')
+    try:
+        with open('creds.dat','ab') as fappend:
+            l=[username,password,namet,role]
+            pickle.dump(l,fappend)
+    except Exception as e:
+        print(f"Error reading creds.dat: {e}")
+
+
+    return render_template('new.html', final_data=all)
+
+
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)
+
